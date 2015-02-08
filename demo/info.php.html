@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/usr/src/codelint/codelint/collie/branches/dev/client/chinapay/demo/info.php.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="php">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="darkblue">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #a8a8a8; background-color: #000000; }
+body { font-family: monospace; color: #a8a8a8; background-color: #000000; }
+* { font-size: 1em; }
+.Constant { color: #ff40ff; }
+.Comment { color: #c00000; }
+.Special { color: #af5f00; }
+.Identifier { color: #00ffff; }
+.Statement { color: #ffff00; }
+.PreProc { color: #ff40ff; }
+.Type { color: #00ff00; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="Special">&lt;?php</span>
+<span class="PreProc">require_once</span><span class="Special">(</span>'<span class="Constant">./config.php</span>'<span class="Special">)</span>;
+
+<span class="Statement">$</span><span class="Identifier">out_trade_no</span> <span class="Statement">=</span> <span class="Statement">empty</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">out_trade_no</span>'<span class="Special">])</span> <span class="Statement">?</span> '' <span class="Statement">:</span> <span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">out_trade_no</span>'<span class="Special">]</span>;
+
+<span class="Statement">$</span><span class="Identifier">cache</span> <span class="Statement">=</span> get_cache<span class="Special">()</span>;
+
+<span class="Comment">// header(&quot;Content-type: application/json&quot;);</span>
+<span class="Statement">$</span><span class="Identifier">data</span> <span class="Statement">=</span> <span class="Type">array</span><span class="Special">(</span>
+    <span class="Statement">$</span><span class="Identifier">out_trade_no</span> <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">out_trade_no</span><span class="Special">)</span>,
+    '<span class="Constant">last_notify</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span>LAST_NOTIFY_CACHE_KEY<span class="Special">)</span>,
+    '<span class="Constant">last_error</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span>LAST_ERROR_CACHE_KEY<span class="Special">)</span>
+<span class="Special">)</span>;
+<span class="Statement">$</span><span class="Identifier">serial</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">out_trade_no</span><span class="Special">)</span>;
+<span class="Statement">$</span><span class="Identifier">serial</span><span class="Special">[</span>'<span class="Constant">trade_no</span>'<span class="Special">]</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">out_trade_no</span>;
+<span class="Statement">$</span><span class="Identifier">last_notify</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span>LAST_NOTIFY_CACHE_KEY<span class="Special">)</span>;
+<span class="Statement">$</span><span class="Identifier">last_error</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span>LAST_ERROR_CACHE_KEY<span class="Special">)</span>;
+<span class="Comment">// echo(json_encode($data));</span>
+<span class="Special">?&gt;</span>
+<span class="Comment">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+<span class="Comment">    &quot;<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</a>&quot;&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">html</span><span class="Identifier"> xmlns=</span><span class="Constant">&quot;<a href="http://www.w3.org/1999/xhtml">http://www.w3.org/1999/xhtml</a>&quot;</span><span class="Identifier"> xml:</span><span class="Type">lang</span><span class="Identifier">=</span><span class="Constant">&quot;en&quot;</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">head</span><span class="Identifier">&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">meta</span><span class="Identifier"> </span><span class="Type">http-equiv</span><span class="Identifier">=</span><span class="Constant">&quot;Content-Type&quot;</span><span class="Identifier"> </span><span class="Type">content</span><span class="Identifier">=</span><span class="Constant">&quot;text/html;charset=UTF-8&quot;</span><span class="Identifier">/&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">title</span><span class="Identifier">&gt;</span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span> <span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">out_trade_no</span>'<span class="Special">]</span> <span class="Special">?&gt;</span><span class="Identifier">&lt;/</span><span class="Statement">title</span><span class="Identifier">&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">script</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;text/javascript&quot;</span><span class="Identifier"> </span><span class="Type">src</span><span class="Identifier">=</span><span class="Constant">&quot;js/jquery-1.9.1.min.js&quot;</span><span class="Identifier">&gt;</span><span class="Identifier">&lt;/</span><span class="Statement">script</span><span class="Identifier">&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">script</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;text/javascript&quot;</span><span class="Identifier"> </span><span class="Type">src</span><span class="Identifier">=</span><span class="Constant">&quot;js/json_to_table.js&quot;</span><span class="Identifier">&gt;</span><span class="Identifier">&lt;/</span><span class="Statement">script</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;/</span><span class="Statement">head</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">body</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier"> </span><span class="Type">style</span><span class="Identifier">=</span><span class="Constant">&quot;margin: auto 0;text-align: center&quot;</span><span class="Identifier">&gt;</span>
+    <span class="Identifier">&lt;</span><span class="Statement">textarea</span><span class="Identifier"> </span><span class="Type">rows</span><span class="Identifier">=</span><span class="Constant">&quot;100&quot;</span><span class="Identifier"> </span><span class="Type">cols</span><span class="Identifier">=</span><span class="Constant">&quot;120&quot;</span><span class="Identifier"> </span><span class="Type">style</span><span class="Identifier">=</span><span class="Constant">&quot;font-size: 16px;width: 100%;margin: 0;padding: 0;border: none&quot;</span>
+<span class="Identifier">              </span><span class="Type">disabled</span><span class="Identifier">=</span><span class="Constant">&quot;disabled&quot;</span><span class="Identifier">&gt;</span>
+
+    <span class="Identifier">&lt;/</span><span class="Statement">textarea</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
+
+<span class="Identifier">&lt;/</span><span class="Statement">body</span><span class="Identifier">&gt;</span>
+
+<span class="Identifier">&lt;</span><span class="Statement">script</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;text/javascript&quot;</span><span class="Identifier">&gt;</span>
+<span class="Special">    </span><span class="Identifier">var</span><span class="Special"> data = </span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span><span class="Special">(</span><span class="Identifier">json_encode</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">data</span><span class="Special">))</span> <span class="Special">?&gt;</span><span class="Special">;</span>
+<span class="Special">    </span><span class="Identifier">var</span><span class="Special"> serial = </span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span><span class="Special">(</span><span class="Identifier">json_encode</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">serial</span><span class="Special">))</span> <span class="Special">?&gt;</span><span class="Special">;</span>
+<span class="Special">    </span><span class="Identifier">var</span><span class="Special"> last_notify = </span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span><span class="Special">(</span><span class="Identifier">json_encode</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">last_notify</span><span class="Special">))</span> <span class="Special">?&gt;</span><span class="Special">;</span>
+<span class="Special">    </span><span class="Identifier">var</span><span class="Special"> last_error = </span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span><span class="Special">(</span><span class="Identifier">json_encode</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">last_error</span><span class="Special">))</span> <span class="Special">?&gt;</span><span class="Special">;</span>
+<span class="Special">    jQuery</span>(<span class="Identifier">function</span>(<span class="Special">$</span>)<span class="Identifier">{</span>
+<span class="Comment">//        $('body').text(JSON.stringify(data));</span>
+<span class="Special">        </span><span class="Identifier">var</span><span class="Special"> str = JSON.stringify</span>(<span class="Special">data, </span><span class="Constant">'    '</span><span class="Special">, </span>8)<span class="Special">;</span>
+<span class="Special">        $</span>(<span class="Constant">'textarea'</span>)<span class="Special">.text</span>(<span class="Special">str</span>)<span class="Special">;</span>
+<span class="Comment">//        $('body').text(ConvertJsonToTable(last_notify, 'content-table', 'table'))</span>
+<span class="Special">    </span><span class="Identifier">}</span>)<span class="Special">;</span>
+
+<span class="Identifier">&lt;/</span><span class="Statement">script</span><span class="Identifier">&gt;</span>
+
+<span class="Identifier">&lt;/</span><span class="Statement">html</span><span class="Identifier">&gt;</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

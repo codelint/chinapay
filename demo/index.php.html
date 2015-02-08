@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/usr/src/codelint/codelint/collie/branches/dev/client/chinapay/demo/index.php.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="php">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="darkblue">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #a8a8a8; background-color: #000000; }
+body { font-family: monospace; color: #a8a8a8; background-color: #000000; }
+* { font-size: 1em; }
+.PreProc { color: #ff40ff; }
+.Comment { color: #c00000; }
+.Constant { color: #ff40ff; }
+.Special { color: #af5f00; }
+.Identifier { color: #00ffff; }
+.Statement { color: #ffff00; }
+.Title { color: #ff40ff; font-weight: bold; }
+.Type { color: #00ff00; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="Special">&lt;?php</span>
+<span class="Statement">$</span><span class="Identifier">out_trade_no</span> <span class="Statement">=</span> <span class="Identifier">time</span><span class="Special">()</span> <span class="Statement">.</span> <span class="Identifier">rand</span><span class="Special">(</span><span class="Constant">1000</span>, <span class="Constant">9000</span><span class="Special">)</span>;
+<span class="Special">?&gt;</span>
+<span class="Comment">&lt;!DOCTYPE html&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">html</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">head</span><span class="Identifier">&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">title</span><span class="Identifier">&gt;</span><span class="Title">支付网关测试</span><span class="Identifier">&lt;/</span><span class="Statement">title</span><span class="Identifier">&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">meta</span><span class="Identifier"> </span><span class="Type">http-equiv</span><span class="Identifier">=</span><span class="Constant">&quot;Content-Type&quot;</span><span class="Identifier"> </span><span class="Type">content</span><span class="Identifier">=</span><span class="Constant">&quot;text/html; charset=utf-8&quot;</span><span class="Identifier">/&gt;</span>
+<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">style</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;text/css&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Statement">select</span><span class="Special">,</span> <span class="Statement">input</span>: <span class="Identifier">{</span>
+            <span class="Type">font-size</span>: <span class="Constant">16px</span>;
+            <span class="Type">width</span>: <span class="Constant">140px</span>;
+        <span class="Identifier">}</span>
+    <span class="Identifier">&lt;/</span><span class="Statement">style</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;/</span><span class="Statement">head</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">body</span><span class="Identifier"> </span><span class="Type">style</span><span class="Identifier">=</span><span class="Constant">&quot;margin: auto 0; text-align: center&quot;</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier">&gt;&lt;</span><span class="Statement">h2</span><span class="Identifier">&gt;</span><span class="Title">支付宝支付测试</span><span class="Identifier">&lt;/</span><span class="Statement">h2</span><span class="Identifier">&gt;&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier"> </span><span class="Type">style</span><span class="Identifier">=</span><span class="Constant">&quot;font-size: 18px&quot;</span><span class="Identifier">&gt;</span>
+    <span class="Identifier">&lt;</span><span class="Statement">form</span><span class="Identifier"> </span><span class="Type">action</span><span class="Identifier">=</span><span class="Constant">&quot;alipay.redirect.php&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;gateway-select&quot;</span><span class="Identifier">&gt;</span>网关
+            <span class="Identifier">&lt;</span><span class="Statement">select</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;gateway-select&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;gateway&quot;</span><span class="Identifier">&gt;</span>
+                <span class="Identifier">&lt;</span><span class="Statement">option</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;Alipay_WapExpress&quot;</span><span class="Identifier">&gt;</span>手机.支付宝<span class="Identifier">&lt;/</span><span class="Statement">option</span><span class="Identifier">&gt;</span>
+            <span class="Identifier">&lt;/</span><span class="Statement">select</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;out_trade_no-input&quot;</span><span class="Identifier">&gt;</span>
+            订单号
+            <span class="Identifier">&lt;</span><span class="Statement">input</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;out_trade_no-input&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;out_trade_no&quot;</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;</span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span> <span class="Statement">$</span><span class="Identifier">out_trade_no</span>; <span class="Special">?&gt;</span><span class="Constant">&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;total_fee-input&quot;</span><span class="Identifier">&gt;</span>
+            金额
+            <span class="Identifier">&lt;</span><span class="Statement">input</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;total_fee-input&quot;</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;number&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;total_fee&quot;</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;0.01&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;subject-input&quot;</span><span class="Identifier">&gt;</span>
+            支付提示语
+            <span class="Identifier">&lt;</span><span class="Statement">input</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;subject-input&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;subject&quot;</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;text&quot;</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;你正在为订单[</span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span> <span class="Statement">$</span><span class="Identifier">out_trade_no</span>; <span class="Special">?&gt;</span><span class="Constant">]支付...&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">button</span><span class="Identifier">&gt;</span>提交<span class="Identifier">&lt;/</span><span class="Statement">button</span><span class="Identifier">&gt;</span>
+    <span class="Identifier">&lt;/</span><span class="Statement">form</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
+
+<span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier">&gt;&lt;</span><span class="Statement">h2</span><span class="Identifier">&gt;</span><span class="Title">微信支付测试</span><span class="Identifier">&lt;/</span><span class="Statement">h2</span><span class="Identifier">&gt;&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier"> </span><span class="Type">style</span><span class="Identifier">=</span><span class="Constant">&quot;font-size: 18px&quot;</span><span class="Identifier">&gt;</span>
+    <span class="Identifier">&lt;</span><span class="Statement">form</span><span class="Identifier"> </span><span class="Type">action</span><span class="Identifier">=</span><span class="Constant">&quot;wechat.redirect.php&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;gateway-select&quot;</span><span class="Identifier">&gt;</span>网关
+            <span class="Identifier">&lt;</span><span class="Statement">select</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;gateway-select&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;gateway&quot;</span><span class="Identifier">&gt;</span>
+                <span class="Identifier">&lt;</span><span class="Statement">option</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;Wechat_Express&quot;</span><span class="Identifier">&gt;</span>微信<span class="Identifier">&lt;/</span><span class="Statement">option</span><span class="Identifier">&gt;</span>
+            <span class="Identifier">&lt;/</span><span class="Statement">select</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;out_trade_no-input&quot;</span><span class="Identifier">&gt;</span>
+            订单号
+            <span class="Identifier">&lt;</span><span class="Statement">input</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;out_trade_no-input&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;out_trade_no&quot;</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;</span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span> <span class="Statement">$</span><span class="Identifier">out_trade_no</span>; <span class="Special">?&gt;</span><span class="Constant">&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;total_fee-input&quot;</span><span class="Identifier">&gt;</span>
+            金额
+            <span class="Identifier">&lt;</span><span class="Statement">input</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;total_fee-input&quot;</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;number&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;total_fee&quot;</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;0.01&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">label</span><span class="Identifier"> </span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">&quot;subject-input&quot;</span><span class="Identifier">&gt;</span>
+            支付提示语
+            <span class="Identifier">&lt;</span><span class="Statement">input</span><span class="Identifier"> </span><span class="Type">id</span><span class="Identifier">=</span><span class="Constant">&quot;subject-input&quot;</span><span class="Identifier"> </span><span class="Type">name</span><span class="Identifier">=</span><span class="Constant">&quot;subject&quot;</span><span class="Identifier"> </span><span class="Type">type</span><span class="Identifier">=</span><span class="Constant">&quot;text&quot;</span><span class="Identifier"> </span><span class="Type">value</span><span class="Identifier">=</span><span class="Constant">&quot;你正在为订单[</span><span class="Special">&lt;?php</span> <span class="PreProc">echo</span> <span class="Statement">$</span><span class="Identifier">out_trade_no</span>; <span class="Special">?&gt;</span><span class="Constant">]支付...&quot;</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;/</span><span class="Statement">label</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;&lt;</span><span class="Statement">br</span><span class="Identifier">&gt;</span>
+        <span class="Identifier">&lt;</span><span class="Statement">button</span><span class="Identifier">&gt;</span>提交<span class="Identifier">&lt;/</span><span class="Statement">button</span><span class="Identifier">&gt;</span>
+    <span class="Identifier">&lt;/</span><span class="Statement">form</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
+
+<span class="Identifier">&lt;/</span><span class="Statement">body</span><span class="Identifier">&gt;</span>
+<span class="Identifier">&lt;/</span><span class="Statement">html</span><span class="Identifier">&gt;</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

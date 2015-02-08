@@ -1,0 +1,19 @@
+{
+    "name": "codelint/chinapay",
+    "description": "Omnipay's gateway implement for chinese payment service like (alipay, wechat, netpay)",
+    "require": {
+        "omnipay/common": "~2.3",
+        "doctrine/cache": "1.3.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "codelint",
+            "email": "codelint@foxmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"Omnipay\\": "src/"},
+        "files": ["src/Omnipay/Utils/helper.php"]
+    }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/usr/src/codelint/codelint/collie/branches/dev/client/chinapay/demo/wechat.redirect.php.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="php">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="darkblue">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #a8a8a8; background-color: #000000; }
+body { font-family: monospace; color: #a8a8a8; background-color: #000000; }
+* { font-size: 1em; }
+.Constant { color: #ff40ff; }
+.PreProc { color: #ff40ff; }
+.Comment { color: #c00000; }
+.Special { color: #af5f00; }
+.Identifier { color: #00ffff; }
+.Statement { color: #ffff00; }
+.Type { color: #00ff00; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="Special">&lt;?php</span>
+<span class="Comment">/*</span>
+<span class="Comment"> * notice :</span>
+<span class="Comment"> *  return url must not have any url param</span>
+<span class="Comment"> *  total_fee WeChat use Fen not Yuan as unit</span>
+<span class="Comment"> */</span>
+
+<span class="Statement">$</span><span class="Identifier">config</span> <span class="Statement">=</span> <span class="PreProc">require_once</span><span class="Special">(</span>'<span class="Constant">./config.php</span>'<span class="Special">)</span>;
+
+<span class="Statement">$</span><span class="Identifier">config</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">wechat</span>'<span class="Special">]</span>;
+
+<span class="Comment">/**</span>
+<span class="Comment"> * 跳转到支付界面</span>
+<span class="Comment"> * @param $config</span>
+<span class="Comment"> */</span>
+<span class="PreProc">function</span> wechat_redirect<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">)</span>
+<span class="Special">{</span>
+    <span class="Comment">/*</span>
+<span class="Comment">     * @var Omnipay\Wechat\ExpressGateway</span>
+<span class="Comment">     */</span>
+    <span class="Statement">try</span>
+    <span class="Special">{</span>
+<span class="Comment">//        $gateway = \Omnipay\Omnipay::create('Wechat_Express');</span>
+        <span class="Statement">$</span><span class="Identifier">gateway</span> <span class="Statement">=</span> <span class="PreProc">new</span> \Omnipay\Wechat\ExpressGateway<span class="Special">()</span>;
+
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setAppId<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">app_id</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setKey<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">pay_sign_key</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setPartner<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">partner</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setPartnerKey<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">partner_key</span>'<span class="Special">])</span>;
+
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setNotifyUrl<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">notify_url</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setReturnUrl<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">return_url</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setReturnUrl<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">cancel_url</span>'<span class="Special">])</span>;
+
+        <span class="Statement">$</span><span class="Identifier">out_trade_no</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">out_trade_no</span>'<span class="Special">]</span>;
+        <span class="Statement">$</span><span class="Identifier">opts</span> <span class="Statement">=</span> <span class="Type">array</span><span class="Special">(</span>
+            '<span class="Constant">subject</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">subject</span>'<span class="Special">]</span>,
+            '<span class="Constant">description</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> '<span class="Constant">微信无效</span>',
+            '<span class="Constant">total_fee</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">total_fee</span>'<span class="Special">]</span>,
+            '<span class="Constant">out_trade_no</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">out_trade_no</span>,
+        <span class="Special">)</span>;
+        <span class="Statement">$</span><span class="Identifier">res</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>purchase<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">opts</span><span class="Special">)</span><span class="Type">-&gt;</span>send<span class="Special">()</span>;
+        <span class="Statement">$</span><span class="Identifier">cache</span> <span class="Statement">=</span> get_cache<span class="Special">()</span>;
+        <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span><span class="Identifier">save</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">out_trade_no</span>, <span class="Statement">$</span><span class="Identifier">opts</span><span class="Special">)</span>;
+
+        <span class="Statement">if</span> <span class="Special">(</span><span class="Statement">!</span><span class="Statement">empty</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">_GET</span><span class="Special">[</span>'<span class="Constant">redirect</span>'<span class="Special">]))</span>
+        <span class="Special">{</span>
+            <span class="Statement">$</span><span class="Identifier">res</span><span class="Type">-&gt;</span>redirect<span class="Special">(</span>'<span class="Constant">js</span>'<span class="Special">)</span>;
+        <span class="Special">}</span>
+        <span class="Statement">$</span><span class="Identifier">res</span><span class="Type">-&gt;</span>redirect<span class="Special">()</span>;
+    <span class="Special">}</span> <span class="Statement">catch</span> <span class="Special">(</span>\<span class="Identifier">Exception</span> <span class="Statement">$</span><span class="Identifier">e</span><span class="Special">)</span>
+    <span class="Special">{</span>
+        <span class="Identifier">var_dump</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">e</span><span class="Type">-&gt;</span>getMessage<span class="Special">())</span>;
+    <span class="Special">}</span>
+<span class="Special">}</span>
+
+wechat_redirect<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">)</span>;
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

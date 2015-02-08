@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/usr/src/codelint/codelint/collie/branches/dev/client/chinapay/demo/alipay.notify.php.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="php">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="darkblue">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #a8a8a8; background-color: #000000; }
+body { font-family: monospace; color: #a8a8a8; background-color: #000000; }
+* { font-size: 1em; }
+.Constant { color: #ff40ff; }
+.PreProc { color: #ff40ff; }
+.Todo { color: #ff6060; background-color: #0000c0; padding-bottom: 1px; }
+.Comment { color: #c00000; }
+.Special { color: #af5f00; }
+.Identifier { color: #00ffff; }
+.Statement { color: #ffff00; }
+.Type { color: #00ff00; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="Special">&lt;?php</span>
+<span class="Statement">$</span><span class="Identifier">config</span> <span class="Statement">=</span> <span class="PreProc">require_once</span><span class="Special">(</span>'<span class="Constant">./config.php</span>'<span class="Special">)</span>;
+
+
+<span class="Statement">$</span><span class="Identifier">config</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">alipay</span>'<span class="Special">]</span>;
+
+<span class="Comment">/**</span>
+<span class="Comment"> * 支付成功通知函数, POST REQUEST FROM Alipay Server</span>
+<span class="Comment"> * @param $config</span>
+<span class="Comment"> * @param $get</span>
+<span class="Comment"> * @param $post</span>
+<span class="Comment"> */</span>
+<span class="PreProc">function</span> notify_callback<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span>, <span class="Statement">$</span><span class="Identifier">get</span>, <span class="Statement">$</span><span class="Identifier">post</span><span class="Special">)</span>
+<span class="Special">{</span>
+    <span class="Statement">$</span><span class="Identifier">cache</span> <span class="Statement">=</span> get_cache<span class="Special">()</span>;
+    <span class="Statement">try</span>
+    <span class="Special">{</span>
+        <span class="Statement">$</span><span class="Identifier">gateway</span> <span class="Statement">=</span> \Omnipay\Omnipay<span class="Statement">::</span>create<span class="Special">(</span>'<span class="Constant">Alipay_WapExpress</span>'<span class="Special">)</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setPartner<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">partner</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setKey<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">key</span>'<span class="Special">])</span>;
+        <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>setSellerEmail<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">seller_email</span>'<span class="Special">])</span>;
+
+        <span class="Statement">$</span><span class="Identifier">params</span> <span class="Statement">=</span> <span class="Identifier">array_merge</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">get</span>, <span class="Statement">$</span><span class="Identifier">post</span><span class="Special">)</span>;
+
+        <span class="Statement">$</span><span class="Identifier">options</span><span class="Special">[</span>'<span class="Constant">ca_cert_path</span>'<span class="Special">]</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">config</span><span class="Special">[</span>'<span class="Constant">ca_cert_path</span>'<span class="Special">]</span>;
+        <span class="Statement">$</span><span class="Identifier">options</span><span class="Special">[</span>'<span class="Constant">sign_type</span>'<span class="Special">]</span> <span class="Statement">=</span> '<span class="Constant">MD5</span>';
+        <span class="Statement">$</span><span class="Identifier">options</span><span class="Special">[</span>'<span class="Constant">request_params</span>'<span class="Special">]</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">params</span>;
+
+        <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span><span class="Identifier">save</span><span class="Special">(</span>LAST_NOTIFY_CACHE_KEY, <span class="Type">array</span><span class="Special">(</span>
+            '<span class="Constant">url</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> '<span class="Constant"><a href="http://">http://</a></span>' <span class="Statement">.</span> <span class="Statement">$</span><span class="Identifier">_SERVER</span><span class="Special">[</span>'<span class="Constant">HTTP_HOST</span>'<span class="Special">]</span> <span class="Statement">.</span> <span class="Statement">$</span><span class="Identifier">_SERVER</span><span class="Special">[</span>'<span class="Constant">REQUEST_URI</span>'<span class="Special">]</span>,
+            '<span class="Constant">get</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Identifier">http_build_query</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">get</span><span class="Special">)</span>, '<span class="Constant">post</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Identifier">http_build_query</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">post</span><span class="Special">)</span>
+        <span class="Special">))</span>;
+
+        <span class="Statement">$</span><span class="Identifier">response</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">gateway</span><span class="Type">-&gt;</span>completePurchase<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">options</span><span class="Special">)</span><span class="Type">-&gt;</span>send<span class="Special">()</span>;
+        <span class="Statement">if</span> <span class="Special">(</span><span class="Statement">$</span><span class="Identifier">response</span><span class="Type">-&gt;</span>isSuccessful<span class="Special">()</span> <span class="Statement">&amp;&amp;</span> <span class="Statement">$</span><span class="Identifier">response</span><span class="Type">-&gt;</span>isTradeStatusOk<span class="Special">())</span>
+        <span class="Special">{</span>
+            <span class="Comment">//</span><span class="Todo">todo</span><span class="Comment"> success</span>
+            <span class="Comment">// if u use the wap alipay u need to parse the trade info from .notify_data</span>
+            <span class="Statement">$</span><span class="Identifier">params</span> <span class="Statement">=</span> \Omnipay\Utils\Utils<span class="Statement">::</span>format_wap_alipay_notify<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">params</span><span class="Special">)</span>;
+            <span class="Statement">$</span><span class="Identifier">no</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">params</span><span class="Special">[</span>'<span class="Constant">out_trade_no</span>'<span class="Special">]</span>;
+            <span class="Statement">$</span><span class="Identifier">opts</span> <span class="Statement">=</span> <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>fetch<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">no</span><span class="Special">)</span>;
+            <span class="Statement">$</span><span class="Identifier">opts</span><span class="Special">[</span>'<span class="Constant">notify</span>'<span class="Special">]</span> <span class="Statement">=</span> <span class="Type">array</span><span class="Special">(</span>'<span class="Constant">_GET</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">get</span>, '<span class="Constant">_POST</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">post</span><span class="Special">)</span>;
+            <span class="Statement">$</span><span class="Identifier">opts</span><span class="Special">[</span>'<span class="Constant">status</span>'<span class="Special">]</span> <span class="Statement">=</span> '<span class="Constant">支付成功</span>';
+
+            <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span>delete<span class="Special">(</span>LAST_ERROR_CACHE_KEY<span class="Special">)</span>;
+            <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span><span class="Identifier">save</span><span class="Special">(</span>LAST_NOTIFY_CACHE_KEY, <span class="Type">array</span><span class="Special">(</span>
+                '<span class="Constant">url</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> '<span class="Constant"><a href="http://">http://</a></span>' <span class="Statement">.</span> <span class="Statement">$</span><span class="Identifier">_SERVER</span><span class="Special">[</span>'<span class="Constant">HTTP_HOST</span>'<span class="Special">]</span> <span class="Statement">.</span> <span class="Statement">$</span><span class="Identifier">_SERVER</span><span class="Special">[</span>'<span class="Constant">REQUEST_URI</span>'<span class="Special">]</span>,
+                '<span class="Constant">get</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Identifier">http_build_query</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">get</span><span class="Special">)</span>, '<span class="Constant">post</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Identifier">http_build_query</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">post</span><span class="Special">)</span>,
+                '<span class="Constant">out_trade_no</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> <span class="Statement">$</span><span class="Identifier">no</span>,
+                '<span class="Constant">status</span>' <span class="Statement">=</span><span class="Statement">&gt;</span> '<span class="Constant">success</span>'
+            <span class="Special">))</span>;
+
+            <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span><span class="Identifier">save</span><span class="Special">(</span><span class="Statement">$</span><span class="Identifier">no</span>, <span class="Statement">$</span><span class="Identifier">opts</span><span class="Special">)</span>;
+
+            <span class="Comment">// success return 'success' to response to tell alipay's server, to stop continuing notify request</span>
+<span class="Comment">//            die('continue') //return continue just for debug;</span>
+            <span class="Statement">die</span><span class="Special">(</span>'<span class="Constant">success</span>'<span class="Special">)</span>;
+        <span class="Special">}</span>
+        <span class="Statement">else</span>
+        <span class="Special">{</span>
+            <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span><span class="Identifier">save</span><span class="Special">(</span>LAST_ERROR_CACHE_KEY, <span class="Statement">$</span><span class="Identifier">options</span><span class="Special">)</span>;
+            <span class="Statement">die</span><span class="Special">(</span>'<span class="Constant">fail</span>'<span class="Special">)</span>;
+        <span class="Special">}</span>
+    <span class="Special">}</span> <span class="Statement">catch</span> <span class="Special">(</span>\<span class="Identifier">Exception</span> <span class="Statement">$</span><span class="Identifier">e</span><span class="Special">)</span>
+    <span class="Special">{</span>
+        <span class="Statement">$</span><span class="Identifier">cache</span><span class="Type">-&gt;</span><span class="Identifier">save</span><span class="Special">(</span>LAST_ERROR_CACHE_KEY, <span class="Statement">$</span><span class="Identifier">e</span><span class="Type">-&gt;</span>getLine<span class="Special">()</span> <span class="Statement">.</span> '<span class="Constant">: </span>' <span class="Statement">.</span> <span class="Statement">$</span><span class="Identifier">e</span><span class="Type">-&gt;</span>getMessage<span class="Special">())</span>;
+        <span class="Statement">die</span><span class="Special">(</span>'<span class="Constant">exception</span>'<span class="Special">)</span>;
+    <span class="Special">}</span>
+<span class="Special">}</span>
+
+notify_callback<span class="Special">(</span><span class="Statement">$</span><span class="Identifier">config</span>, <span class="Statement">$</span><span class="Identifier">_GET</span>, <span class="Statement">$</span><span class="Identifier">_POST</span><span class="Special">)</span>;
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

@@ -1,0 +1,57 @@
+Demo Entry 演示入口
+
+demo/index.php : 为demo的入口地址，可以测试支付宝支付，微信支付需要填入相关配置，支付宝配置已经填入
+
+demo/config.php : 包含了一些通用配置，例如加载库，所需要库在vendor目录里，通过文件中：
+    require_once('../vendor/autoload.php'); 语句加载
+
+--------------------------------------------------------------------------------
+Modify Alipay/Wechat Config 修改配置
+
+修改文件demo/config.php的返回值可修改配置
+
+--------------------------------------------------------------------------------
+
+About alipay.wap use:
+
+demo/alipay.redirect.php : the demo for redirect use 关于如何跳转到支付界面的代码演示
+
+demo/alipay.notify.php : the demo for notify use 关于如何响应通知的演示
+
+the return url have the same params as alipay server post to demo/alipay.notify.php when 
+the return url call.
+    当用户支付完成后，返回到return_url指定的路径时，所含参数阿里服务器通知支付结果到alipay.notify.php时，
+    POST的参数一致。
+    微信使用：
+        $_GET['out_trade_no']: 为订单号，
+        $_GET['trade_no']: 为流水号，
+        $_GET['total_fee']为订单金额
+
+----------------------------------------------------------------------------------
+
+About WeChat:
+
+demo/wechat.redirect.php
+    show how to redirect to pay by Wechat 支付跳转演示
+    注意：这里输入的金额单位以元（接口做了处理，使得网关跳转接口一致使用元作为单位，但微信实际使用“分”
+    做单位，因此在响应接口中，微信返回的金额单位为：“分”，不是元）
+
+demo/wechat.notify.php
+    show how to react the payment result notify. 响应支付结果
+
+About return_url:
+    支付完成跳转回来，微信使用POST，其参数与[demo/wechat.notify.php]一致。
+    微信使用：
+       $_GET['out_trade_no'] 订单号，
+       $_GET['bank_billno'] 流水号，
+       $_GET['product_fee'] 订单金额（单位为分, 注意这里单位与跳转的时候使用的不一致）
+    通知/返回 url的其他参数：
+       $_GET['notify_id'] 消息id
+       $_GET['transaction_id'] 交易号
+
+---------------------------------------------------------------------------------
+通过demo/info.php?out_trade_no=xxxxxxxxxx可以查看支付状态, 返回为一个JSON, 里面记录了
+    指定订单号(out_trade_no)的支付情况（跳转时使用的参数）
+    last_notify: 上一次支付通知的记录(包括通知的url，以及$_GET, $_POST内容）
+    last_error: 上一次支付通知失败纪录
+
