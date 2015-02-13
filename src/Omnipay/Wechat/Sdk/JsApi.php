@@ -14,7 +14,7 @@ class JsApi extends CommonUtil {
     function __construct()
     {
         //设置curl超时时间
-        $this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;
+        $this->curl_timeout = static::CURL_TIMEOUT;
     }
 
     /**
@@ -55,7 +55,7 @@ class JsApi extends CommonUtil {
         //初始化curl
         $ch = curl_init();
         //设置超时
-        curl_setopt($ch, CURLOP_TIMEOUT, $this->curl_timeout);
+//        curl_setopt($ch, CURLOP_TIMEOUT, $this->curl_timeout);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);

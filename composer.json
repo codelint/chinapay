@@ -14,6 +14,9 @@
     ],
     "autoload": {
         "psr-0": {"Omnipay\\": "src/"},
-        "files": ["src/Omnipay/Utils/helper.php"]
+        "files": [
+            "src/Omnipay/Utils/helper.php",
+            "src/Omnipay/Utils/phpqrcode.php"
+        ]
     }
 }

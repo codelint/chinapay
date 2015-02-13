@@ -1,6 +1,7 @@
 <?php namespace Omnipay\Wechat\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Wechat\Sdk\UnifiedOrder;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -49,7 +50,10 @@ class WechatPrePurchaseRequest extends BaseAbstractRequest {
             'out_trade_no',
             'total_fee',
             'spbill_create_ip',
-            'notify_url'
+            'notify_url',
+            'open_id',
+            'cert_path',
+            'cert_key_path'
         );
 
         $params = array_only($this->parameters->all(), array(
@@ -58,13 +62,10 @@ class WechatPrePurchaseRequest extends BaseAbstractRequest {
             'spbill_create_ip', 'notify_url', 'trade_type',
             'open_id', 'product_id',
             'device_info', 'attach',
-            'time_start', 'time_expire', 'goods_tag',
+            'time_start', 'time_expire', 'goods_tag', 'cert_path', 'cert_key_path'
         ));
         $params['appid'] = $params['app_id'];
-        if (!empty($params['open_id']))
-        {
-            $params['openid'] = $params['open_id'];
-        }
+        $params['openid'] = $params['open_id'];
         $params['mch_id'] = $params['partner'];
         $params['nonstr'] = str_random(8);
         $params['time_start'] = date('YmdHis');
@@ -80,22 +81,25 @@ class WechatPrePurchaseRequest extends BaseAbstractRequest {
      */
     public function sendData($data)
     {
-        $params = array_except($data, 'app_key');
-        ksort($params);
-        $qstr = http_build_query($data);
-        $qstr = $qstr . '&key=' . $data['app_key'];
-        $sign = md5($qstr);
+        $unifiedOrder = new UnifiedOrder();
+        $unifiedOrder->init(array(
+            'app_id' => $data['appid'],
+            'mch_id' => $data['mch_id'],
+            'app_secret' => '',
+            'pay_sign_key' => $data['app_key'],
+            'cert_path' => $data['cert_path'],
+            'cert_key_path' => $data['cert_key_path'],
+        ));
+        //sign已填,商户无需重复填写
+        $unifiedOrder->setParameter('openid', $data['openid']); //商品描述
+        $unifiedOrder->setParameter('body', $data['body']); //商品描述
+        $unifiedOrder->setParameter('out_trade_no', $data['out_trade_no']); //商户订单号
+        $unifiedOrder->setParameter('total_fee', $data['total_fee']); //总金额
+        $unifiedOrder->setParameter('notify_url', $data['notify_url']); //通知地址
+        $unifiedOrder->setParameter('trade_type', $data['trade_type']); //交易类型
 
-        $xml_str = '<xml>';
-        foreach($params as $k => $v)
-        {
-            $xml_str = $xml_str . "<$k>" . $v . "</$k>";
-        }
-        $xml_str = $xml_str . "<sign>$sign</sign></xml>";
-
-        $ret = $this->postXml($xml_str, $this->endpoint, 'todo');
-        $arr = xmlToArray(simplexml_load_string($ret));
-        $this->response = new WechatPrePurchaseResponse($this, $arr);
+        $ret = $unifiedOrder->getResult();
+        $this->response = new WechatPrePurchaseResponse($this, $ret);
         return $this->response;
     }
 

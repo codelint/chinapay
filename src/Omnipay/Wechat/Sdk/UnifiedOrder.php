@@ -65,7 +65,7 @@ class UnifiedOrder extends WxpayClient {
     {
         $this->postXml();
         $this->result = $this->xmlToArray($this->response);
-        $prepay_id = $this->result["prepay_id"];
+        $prepay_id = isset($this->result["prepay_id"]) ? $this->result['prepay_id'] : false;
         return $prepay_id;
     }
 

@@ -16,6 +16,18 @@ class CommonUtil {
     protected $cert_key_path = '';
     protected $pub_cert_path = '';
 
+    function init($opts)
+    {
+        $this->app_id = $opts['app_id'];
+        $this->mch_id = $opts['mch_id'];
+        $this->pay_sign_key = $opts['pay_sign_key'];
+        $this->app_secret = $opts['app_secret'];
+        $this->cert_path = $opts['cert_path'];
+        $this->cert_key_path = $opts['cert_key_path'];
+        $this->pub_cert_path = array_get($opts, 'pub_cert_path', '');
+        return $this;
+    }
+
     const CURL_TIMEOUT = 30;
 
     function __construct()
@@ -55,6 +67,11 @@ class CommonUtil {
      */
     function formatBizQueryParaMap($paraMap, $urlencode)
     {
+        return static::_formatBizQueryParaMap($paraMap, $urlencode);
+    }
+
+    static public function _formatBizQueryParaMap($paraMap, $urlencode)
+    {
         $buff = "";
         ksort($paraMap);
         foreach ($paraMap as $k => $v)
@@ -74,21 +91,18 @@ class CommonUtil {
         return $reqPar;
     }
 
-    /**
-     *    作用：生成签名
-     */
-    public function getSign($Obj)
+    static public function gen_signature($obj, $key)
     {
-        foreach ($Obj as $k => $v)
+        foreach ($obj as $k => $v)
         {
             $Parameters[$k] = $v;
         }
         //签名步骤一：按字典序排序参数
         ksort($Parameters);
-        $String = $this->formatBizQueryParaMap($Parameters, false);
+        $String = static::_formatBizQueryParaMap($Parameters, false);
         //echo '【string1】'.$String.'</br>';
         //签名步骤二：在string后加入KEY
-        $String = $String . "&key=" . $this->pay_sign_key;
+        $String = $String . "&key=" . $key;
         //echo "【string2】".$String."</br>";
         //签名步骤三：MD5加密
         $String = md5($String);
@@ -97,6 +111,14 @@ class CommonUtil {
         $result_ = strtoupper($String);
         //echo "【result】 ".$result_."</br>";
         return $result_;
+    }
+
+    /**
+     *    作用：生成签名
+     */
+    public function getSign($Obj)
+    {
+        return static::gen_signature($Obj, $this->pay_sign_key);
     }
 
     /**
@@ -137,7 +159,7 @@ class CommonUtil {
         //初始化curl
         $ch = curl_init();
         //设置超时
-        curl_setopt($ch, CURLOP_TIMEOUT, $second);
+//        curl_setopt($ch, CURLOP_TIMEOUT, $second);
         //这里设置代理，如果有的话
         //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
@@ -153,7 +175,7 @@ class CommonUtil {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         //运行curl
         $data = curl_exec($ch);
-        curl_close($ch);
+        //curl_close($ch);
         //返回结果
         if ($data)
         {

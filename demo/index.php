@@ -59,7 +59,7 @@ $out_trade_no = time() . rand(1000, 9000);
         <br><br>
         <label for="total_fee-input">
             金额
-            <input id="total_fee-input" type="number" name="total_fee" value="0.01">
+            <input id="total_fee-input" type="text" name="total_fee" value="0.01">
         </label>
 
         <br><br>

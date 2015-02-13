@@ -29,7 +29,7 @@ class WechatPrePurchaseResponse extends BaseAbstractResponse {
             'prepay_id', 'trade_type', 'code_url',
             'appid', 'mch_id', 'device_info', 'nonce_str',
             'sign',
-            'result_code', 'err_code', 'err_code_des'
+            'result_code', 'err_code', 'err_code_des', 'return_code', 'return_msg'
         ));
     }
 }
