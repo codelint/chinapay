@@ -1,8 +1,8 @@
 <?php namespace Omnipay\Wechat\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
+use Omnipay\Wechat\Sdk\CommonUtil;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
@@ -43,11 +43,17 @@ class WechatPurchaseResponse extends BaseAbstractResponse implements RedirectRes
      */
     public function getRedirectUrl()
     {
-        $params = array_except($this->getData(), 'package');
-        ksort($params);
-        $qstr = http_build_query($params);
-        $sign = sha1($qstr);
+        $params = $this->getData();
+        $key = $params['appkey'];
         $params = array_except($params, 'appkey');
+        if(!empty($params['productid']))
+        {
+            $params['product_id'] = $params['productid'];
+        }
+        $params = array_only($params, ['appid', 'mch_id', 'product_id']);
+        $params['time_stamp'] = time();
+        $params['nonce_str'] = str_random(8);
+        $sign = CommonUtil::gen_signature($params, $key);
         ksort($params);
         $url = $this->endpoint . '?sign=' . $sign . '&' . http_build_query($params);
         return $url;
@@ -67,26 +73,17 @@ class WechatPurchaseResponse extends BaseAbstractResponse implements RedirectRes
     public function getRedirectData()
     {
         $params = array_except($this->getData(), 'productid');
-        ksort($params);
-        $qstr = '';
-        foreach ($params as $k => $v)
-        {
-            $qstr .= '&' . strtolower($k) . "=$v";
-        }
-        $qstr = substr($qstr, 1);
 
-        $sign = sha1($qstr);
-        $params = array_except($params, 'appkey');
+        $key = $params['appkey'];
 
         $params = [
             'appId' => $params['appid'],
             'package' => $params['package'],
             'timeStamp' => '' . $params['timestamp'],
             'nonceStr' => $params['noncestr'],
+            'signType' => 'MD5'
         ];
-        ksort($params);
-        $params['signType'] = 'SHA1';
-        $params['paySign'] = $sign;
+        $params['paySign'] = CommonUtil::gen_signature($params, $key);
 
         return $params;
     }

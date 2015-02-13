@@ -46,12 +46,17 @@ class WechatPurchaseRequest extends BaseAbstractRequest {
             'app_key'
         );
 
-        $params = array_only($this->parameters->all(), ['app_id', 'productid', 'app_key', 'noncestr', 'timestamp', 'package']);
-
+        $params = $this->parameters->all();
         $params['appid'] = $params['app_id'];
         $params['appkey'] = $params['app_key'];
+        $params['mch_id'] = $params['partner'];
+        $params = array_only($params, array(
+            'appid', 'productid', 'appkey',
+            'noncestr', 'timestamp', 'package','mch_id'
+        ));
 
-        return array_except($params, ['app_id', 'app_key']);
+
+        return $params;
     }
 
     /**
@@ -67,7 +72,7 @@ class WechatPurchaseRequest extends BaseAbstractRequest {
         {
             $this->response->setReturnUrl($this->parameters->get('return_url'));
         }
-        if($this->parameters->has('return_url'))
+        if ($this->parameters->has('return_url'))
         {
             $this->response->setCancelUrl($this->parameters->get('cancel_url'));
         }

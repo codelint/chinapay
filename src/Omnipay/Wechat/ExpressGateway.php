@@ -45,7 +45,6 @@ class ExpressGateway extends AbstractGateway {
         return $this->getParameter('app_key');
     }
 
-
     function getPartner()
     {
         return $this->getParameter('partner');
@@ -64,6 +63,25 @@ class ExpressGateway extends AbstractGateway {
     function setPartnerKey($key)
     {
         $this->setParameter('partner_key', $key);
+    }
+
+    function setCertPath($path){
+        $this->setParameter('cert_path', $path);
+    }
+
+    function getCertPath()
+    {
+        $this->getParameter('cert_path');
+    }
+
+    function setCertKeyPath($path)
+    {
+        $this->setParameter('cert_key_path', $path);
+    }
+
+    function getCertKeyPath()
+    {
+        $this->getParameter('cert_key_path');
     }
 
     function getNotifyUrl()
@@ -160,19 +178,51 @@ class ExpressGateway extends AbstractGateway {
     }
 
     /**
+     * 支付
      * @param array $parameters [ 'out_trade_no' => '', 'description' => '', 'subject' => ''
+     * @throws \RuntimeException
      * @return mixed
      */
-    public function purchase(array $parameters = [])
+    public function purchase(array $parameters = array())
     {
-        $parameters['package'] = $this->createPackageStr([
-            'productid' => $parameters['out_trade_no'],
-            'subject' => $parameters['subject'],
-            'money_paid' => $parameters['total_fee'],
-        ]);
+        if (empty($parameters['prepay_id']))
+        {
+            if(!isset($parameters['open_id'])){
+                throw new \RuntimeException('lack open id');
+            }
+            $res = $this->prePurchase($parameters)->send();
+            $ref = $res->getTransactionReference();
+            if (empty($ref['prepay_id']))
+            {
+                throw new \RuntimeException('get prepay_id failed');
+            }
+            else
+            {
+                $parameters['prepay_id'] = $ref['prepay_id'];
+            }
+        }
+        //获取open_id
+        $parameters['package'] = 'prepay_id=' . $parameters['prepay_id'];
         $parameters = array_key_map($parameters, ['out_trade_no' => 'productid']);
-        $params = array_only($parameters, ['appid', 'timestamp', 'noncestr', 'productid', 'package']);
+        $params = array_only($parameters, ['appid', 'timestamp', 'noncestr', 'productid', 'package', 'open_id']);
         return $this->createRequest('\Omnipay\Wechat\Message\WechatPurchaseRequest', $params);
+    }
+
+    /**
+     * 获取预支付号
+     * @param array $parameters ['subject', 'open_id', 'total_fee', 'out_trade_no']
+     * @return mixed
+     */
+    function prePurchase(array $parameters = array())
+    {
+        $parameters = array_key_map($parameters, ['subject' => 'body']);
+
+        $params = array_only($parameters, ['out_trade_no', 'total_fee', 'body', 'open_id']);
+        $params['total_fee'] = abs($params['total_fee']) * 100;
+        $params['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
+        $params['trade_type'] = 'JSAPI';
+
+        return $this->createRequest('\Omnipay\Wechat\Message\WechatPrePurchaseRequest', $params);
     }
 
     /**
