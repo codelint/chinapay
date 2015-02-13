@@ -34,6 +34,9 @@ function wechat_redirect($config)
         $gateway->setReturnUrl($config['return_url']);
         $gateway->setReturnUrl($config['cancel_url']);
 
+        $gateway->setCertPath($config['cert_path']);
+        $gateway->setCertKeyPath($config['cert_key_path']);
+
         $out_trade_no = $_GET['out_trade_no'];
         $opts = array(
             'open_id' => $config['open_id'],
