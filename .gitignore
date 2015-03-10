@@ -4,5 +4,7 @@ phpinfo.php
 .DS_Store
 *.bz2
 *.gz
+*.bak
+*.orig
 /demo/config.php
 /wx/
