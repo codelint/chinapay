@@ -1,6 +1,7 @@
 <?php namespace Omnipay\Wechat\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Wechat\Sdk\Notify;
 
 /**
  * WechatCompleteRequest:
@@ -81,7 +82,6 @@ class WechatCompletePurchaseRequest extends BaseAbstractRequest {
     public function getData()
     {
         $this->validate(
-            'request_params',
             'body'
         );
         return array_only($this->getParameters(), ['request_params', 'body']);
@@ -96,16 +96,23 @@ class WechatCompletePurchaseRequest extends BaseAbstractRequest {
     public function sendData($data)
     {
         $body = $data['body'];
-        $sign = $body['AppSignature'];
-        $params = $data['request_params'];
+        $notify = new Notify();
+        $notify->saveData($body);
 
-        $res_data = array();
-
-        if ($this->verifyBody(array_except($body, ['AppSignature']), $sign) && $this->verifyParam($params))
+        if ($notify->checkSign() == FALSE)
         {
-            $res_data['status'] = true;
-            $res_data['trade_status_ok'] = $params['trade_state'] == 0;
+            $notify->setReturnParameter('return_code', 'FAIL');
+            $notify->setReturnParameter('return_msg', '签名失败');
         }
+        else
+        {
+            $notify->setReturnParameter('return_code', 'SUCCESS');
+        }
+        $returnXml = $notify->returnXml();
+
+        $res_data['status'] = $notify->checkSign();
+        $res_data['return_msg'] = $returnXml;
+        $res_data['trade_status_ok'] = $notify->checkSign();
 
         return $this->response = new WechatCompletePurchaseResponse($this, $res_data);
     }

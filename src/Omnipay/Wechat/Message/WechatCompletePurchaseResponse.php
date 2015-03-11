@@ -39,4 +39,10 @@ class WechatCompletePurchaseResponse extends BaseAbstractResponse implements Com
         return $this->data['trade_status_ok'];
     }
 
+    public function getMessage()
+    {
+        return $this->data['return_msg'];
+    }
+
+
 }
