@@ -84,7 +84,7 @@ class WechatCompletePurchaseRequest extends BaseAbstractRequest {
         $this->validate(
             'body'
         );
-        return array_only($this->getParameters(), ['request_params', 'body']);
+        return $this->getParameters();
     }
 
     /**
@@ -97,6 +97,14 @@ class WechatCompletePurchaseRequest extends BaseAbstractRequest {
     {
         $body = $data['body'];
         $notify = new Notify();
+        $notify->init(array(
+            'app_id' => $data['app_id'],
+            'mch_id' => $data['partner'],
+            'app_secret' => '',
+            'pay_sign_key' => $data['app_key'],
+            'cert_path' => '',
+            'cert_key_path' => '',
+        ));
         $notify->saveData($body);
 
         if ($notify->checkSign() == FALSE)
