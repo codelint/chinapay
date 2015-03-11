@@ -232,8 +232,7 @@ class ExpressGateway extends AbstractGateway {
      */
     public function completePurchase(array $parameters = array())
     {
-        $parameters['body'] = static::xml2array_by_wechat_notify_body($parameters['body']);
-
+        // $parameters['body'] = static::xml2array_by_wechat_notify_body($parameters['body']);
         return $this->createRequest('\Omnipay\Wechat\Message\WechatCompletePurchaseRequest', $parameters);
     }
 
