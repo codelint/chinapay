@@ -46,9 +46,13 @@ return array(
     ),
     'wechat' => array(
         'app_id' => '*',
+        'app_secret' => '*',
         'pay_sign_key' => '*',
         'partner' => '*',
         'partner_key' => '*',
+
+        'cert_path'     => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_cert.pem',
+        'cert_key_path' => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_key.pem',
 
         'return_url' => base_url('/index.php'),
         'notify_url' => base_url('/wechat.notify.php'),

@@ -11,6 +11,7 @@ $config = require_once('./config.php');
 
 $config = $config['wechat'];
 
+
 /**
  * 跳转到支付界面
  * @param $config
@@ -80,4 +81,29 @@ function wechat_redirect($config)
     }
 }
 
-wechat_redirect($config);
+$jsApi = new \Omnipay\Wechat\Sdk\JsApi();
+$jsApi->init(array(
+    'app_id' => $config['app_id'],
+    'mch_id' => $config['mch_id'],
+    'app_secret' => $config['app_secret'],
+    'pay_sign_key' => $config['pay_sign_key'],
+    'cert_path' => $config['cert_path'],
+    'cert_key_path' => $config['cert_key_path'],
+));
+if (array_get($_GET, 'code', false))
+{
+    $jsApi->setCode($_GET['code']);
+//    var_dump($_GET);
+//    $url = $jsApi->createOauthUrlForOpenid();
+    //Header('Location: '. $url);
+    $open_id = $jsApi->getOpenid();
+    $config['open_id'] = $open_id;
+//    var_dump($open_id);
+     wechat_redirect($config);
+}
+else
+{
+    $r_link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $url = $jsApi->createOauthUrlForCode(urlencode($r_link));
+    Header('Location: ' . $url);
+}

@@ -19,11 +19,11 @@ class CommonUtil {
     function init($opts)
     {
         $this->app_id = $opts['app_id'];
-        $this->mch_id = $opts['mch_id'];
-        $this->pay_sign_key = $opts['pay_sign_key'];
         $this->app_secret = $opts['app_secret'];
-        $this->cert_path = $opts['cert_path'];
-        $this->cert_key_path = $opts['cert_key_path'];
+        $this->mch_id = array_get($opts, 'mch_id', '');
+        $this->pay_sign_key = array_get($opts, 'pay_sign_key', '');
+        $this->cert_path = array_get($opts, 'cert_path', '');
+        $this->cert_key_path = array_get($opts, 'cert_key_path', '');
         $this->pub_cert_path = array_get($opts, 'pub_cert_path', '');
         return $this;
     }

@@ -68,22 +68,21 @@ function notify_callback($config, $get, $raw_post)
 
             $serial = $cache->fetch($get['out_trade_no']);
             $serial['notify'] = array('status' => 'success', 'param' => http_build_query($get), 'body' => $raw_post);
-
+            $data = json_decode(json_encode(simplexml_load_string($raw_post, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
             $cache->save($get['out_trade_no'], $serial);
 
             $cache->save(LAST_NOTIFY_CACHE_KEY, array(
                 'param' => http_build_query($get), 'body' => $raw_post,
-                'out_trade_no' => $get['out_trade_no'],
-                'product_fee' => $get['product_fee']/100,
-                'status' => 'success'));
+                'data' => $data,
+                'status' => $response->getMessage()));
             $cache->delete(LAST_ERROR_CACHE_KEY);
 
-            die('success');
+            die($response->getMessage());
 //            die('success');
         }
         else
         {
-            die('fail');
+            die($response->getMessage());
         }
     } catch (\Exception $e)
     {
