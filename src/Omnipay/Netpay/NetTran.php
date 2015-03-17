@@ -1,4 +1,4 @@
-<?php
+<?php namespace Omnipay\Netpay;
 /**
  * 广州好易联支付网络有限公司支付网关商户接口PHP4.4.8
  * @author 技术开发部 邵静
