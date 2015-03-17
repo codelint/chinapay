@@ -1,5 +1,6 @@
 <?php namespace Omnipay\Netpay\Message;
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Netpay\NetTran;
 
 /**
  * NetpayPurchaseRequest:
@@ -46,7 +47,7 @@ class NetpayPurchaseRequest extends BaseAbstractRequest {
             'ResultMode=' . $this->getResultMode() . '&' .
             'Reserved01=' . $this->getDescription() . '&' .
             'Reserved02=';
-        $obj = new \NetTran();
+        $obj = new NetTran();
 
         $encodeMsg = $obj->EncryptMsg($text, $this->getCertFile()) ? $obj->getLastResult() : '';
         $signedMsg = $obj->SignMsg($text, $this->getKeyFile(), "12345678") ? $obj->getLastResult() : '';

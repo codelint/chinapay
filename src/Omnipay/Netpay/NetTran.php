@@ -53,8 +53,8 @@ class NetTran {
 
     /**
      * 对字符串进行加密
-     * @param $TobeEncrypted 待加密的字符串
-     * @param $CertFile 解密者公钥证书路径
+     * @param string $TobeEncrypted 待加密的字符串
+     * @param string $CertFile 解密者公钥证书路径
      * @return bool 加密成功返回true(从LastResult属性获取结果)，失败返回false(从LastErrMsg属性获取失败原因)
      */
     function EncryptMsg($TobeEncrypted, $CertFile)
@@ -190,9 +190,9 @@ class NetTran {
 
     /**
      * 对字符串进行签名
-     * @param $TobeSigned 需要进行签名的字符串
-     * @param $KeyFile PFX证书文件路径
-     * @param $PassWord 私钥保护密码
+     * @param string $TobeSigned 需要进行签名的字符串
+     * @param string $KeyFile PFX证书文件路径
+     * @param string $PassWord 私钥保护密码
      * @return bool 签名成功返回true(从LastResult属性获取结果)，失败返回false(从LastErrMsg属性获取失败原因)
      */
     function SignMsg($TobeSigned, $KeyFile, $PassWord)
