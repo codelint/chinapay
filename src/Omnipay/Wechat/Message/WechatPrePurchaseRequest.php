@@ -51,7 +51,6 @@ class WechatPrePurchaseRequest extends BaseAbstractRequest {
             'total_fee',
             'spbill_create_ip',
             'notify_url',
-            'open_id',
             'cert_path',
             'cert_key_path'
         );
@@ -91,12 +90,16 @@ class WechatPrePurchaseRequest extends BaseAbstractRequest {
             'cert_key_path' => $data['cert_key_path'],
         ));
         //sign已填,商户无需重复填写
-        $unifiedOrder->setParameter('openid', $data['openid']); //商品描述
+
         $unifiedOrder->setParameter('body', $data['body']); //商品描述
         $unifiedOrder->setParameter('out_trade_no', $data['out_trade_no']); //商户订单号
         $unifiedOrder->setParameter('total_fee', $data['total_fee']); //总金额
         $unifiedOrder->setParameter('notify_url', $data['notify_url']); //通知地址
         $unifiedOrder->setParameter('trade_type', $data['trade_type']); //交易类型
+        if($data['trade_type'] == 'JSAPI')
+        {
+            $unifiedOrder->setParameter('openid', $data['openid']);
+        }
 
         $ret = $unifiedOrder->getResult();
         $this->response = new WechatPrePurchaseResponse($this, $ret);

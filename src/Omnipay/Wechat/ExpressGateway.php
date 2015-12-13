@@ -217,10 +217,10 @@ class ExpressGateway extends AbstractGateway {
     {
         $parameters = array_key_map($parameters, ['subject' => 'body']);
 
-        $params = array_only($parameters, ['out_trade_no', 'total_fee', 'body', 'open_id']);
+        $params = array_only($parameters, ['out_trade_no', 'total_fee', 'body', 'open_id', 'trade_type']);
         $params['total_fee'] = abs($params['total_fee']) * 100;
         $params['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
-        $params['trade_type'] = 'JSAPI';
+        // $params['trade_type'] =array_get($pa) 'JSAPI';
 
         return $this->createRequest('\Omnipay\Wechat\Message\WechatPrePurchaseRequest', $params);
     }
