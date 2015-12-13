@@ -68,6 +68,14 @@ $out_trade_no = time() . rand(1000, 9000);
             <input id="subject-input" name="subject" type="text" value="你正在为订单[<?php echo $out_trade_no; ?>]支付...">
         </label>
         <br><br>
+        <label for="subject-input">
+            支付类型
+            <select id="subject-input" name="pay_type">
+                <option value="JSAPI">网页支付</option>
+                <option value="APP">APP_Prepay</option>
+            </select>
+        </label>
+        <br><br>
         <button>提交</button>
     </form>
 </div>

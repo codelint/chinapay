@@ -16,7 +16,7 @@ $config = $config['wechat'];
  * 跳转到支付界面
  * @param $config
  */
-function wechat_redirect($config)
+function wechat_redirect($config, $type = 'pay')
 {
     /*
      * @var Omnipay\Wechat\ExpressGateway
@@ -40,13 +40,21 @@ function wechat_redirect($config)
 
         $out_trade_no = $_GET['out_trade_no'];
         $opts = array(
-            'open_id' => $config['open_id'],
+            'open_id' => array_get($config, 'open_id', false),
             'subject' => $_GET['subject'],
             'description' => '微信无效',
             'total_fee' => $_GET['total_fee'],
             'out_trade_no' => $out_trade_no,
         );
-        $res = $gateway->purchase($opts)->send();
+        if($type == 'prepay')
+        {
+            $res = $gateway->prePurchase(array_add($opts, 'trade_type', 'APP'))->send();
+            echo json_encode($res->getTransactionReference());
+            exit(0);
+        }else{
+            $res = $gateway->purchase($opts)->send();
+        }
+
 //        $res = $gateway->prePurchase($opts)->send();
 //        $ret = $res->getTransactionReference();
 //        echo $ret;
@@ -79,6 +87,12 @@ function wechat_redirect($config)
     {
         var_dump($e->getMessage());
     }
+}
+
+if($_GET['pay_type'] == 'APP')
+{
+    wechat_redirect($config, 'prepay');
+    exit();
 }
 
 $jsApi = new \Omnipay\Wechat\Sdk\JsApi();
