@@ -76,6 +76,10 @@ class WechatPurchaseRequest extends BaseAbstractRequest {
         {
             $this->response->setCancelUrl($this->parameters->get('cancel_url'));
         }
+        if ($this->parameters->has('fail_url'))
+        {
+            $this->response->setFailUrl($this->parameters->get('fail_url'));
+        }
         return $this->response;
     }
 }

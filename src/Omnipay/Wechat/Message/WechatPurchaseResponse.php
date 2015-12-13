@@ -22,6 +22,8 @@ class WechatPurchaseResponse extends BaseAbstractResponse implements RedirectRes
 
     protected $cancel_url = false;
 
+    protected $fail_url = false;
+
     public function isRedirect()
     {
         return true;
@@ -98,6 +100,7 @@ class WechatPurchaseResponse extends BaseAbstractResponse implements RedirectRes
         $return_url = $this->return_url ? : array_get($_SERVER, 'HTTP_REFERER', false);
         $refered_url = array_get($_SERVER, 'HTTP_REFERER', $return_url);
         $cancel_url = $this->cancel_url ? : $refered_url;
+        $fail_url = $this->fail_url ?: $refered_url;
 
         switch ($content_type)
         {
@@ -112,7 +115,7 @@ class WechatPurchaseResponse extends BaseAbstractResponse implements RedirectRes
                 $output = $this->redirect_html();
         }
 
-        $output = sprintf($output, json_encode($data), $return_url, $cancel_url, $refered_url);
+        $output = sprintf($output, json_encode($data), $return_url, $cancel_url, $fail_url);
 
         return HttpResponse::create($output)->send();
     }
@@ -174,5 +177,10 @@ class WechatPurchaseResponse extends BaseAbstractResponse implements RedirectRes
     public function setCancelUrl($url)
     {
         $this->cancel_url = $url;
+    }
+
+    public function setFailUrl($url)
+    {
+        $this->fail_url = $url;
     }
 }

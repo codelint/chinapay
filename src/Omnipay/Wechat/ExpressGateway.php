@@ -114,6 +114,16 @@ class ExpressGateway extends AbstractGateway {
         return $this->getParameter('cancel_url', $url);
     }
 
+    function setFailUrl($url)
+    {
+        $this->setParameter('cancel_url', $url);
+    }
+
+    function getFailUrl($url)
+    {
+        return $this->getParameter('fail_url', $url);
+    }
+
 
     /**
      * Define gateway parameters, in the following format:
