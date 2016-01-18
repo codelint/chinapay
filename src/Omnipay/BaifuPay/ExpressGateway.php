@@ -60,9 +60,24 @@ class ExpressGateway extends AbstractGateway {
         return $this->getParameter('return_url');
     }
 
+    function setCertPath($cert)
+    {
+        $this->setParameter('cert_path', $cert);
+    }
+
+    function getCertPath()
+    {
+        $this->getParameter('cert_path');
+    }
+
 
     public function purchase(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\BaifuPay\Message\ExpressPurchaseRequest', $parameters);
+    }
+
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\BaifuPay\Message\ExpressCompletePurchaseRequest', $parameters);
     }
 }

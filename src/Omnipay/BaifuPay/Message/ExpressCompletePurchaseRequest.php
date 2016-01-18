@@ -80,7 +80,10 @@ class ExpressCompletePurchaseRequest extends AbstractRequest {
     public function sendData($data)
     {
         $verify_xml = $this->getVerifyResponse($data);
-        $data = xmlToArray($verify_xml);
+        /* <?xml version="1.0" encoding="gbk" ?> */
+        $verify_xml = preg_replace('/<\?.*\?>/', '', $verify_xml);
+        // $xml = simplexml_load_string($verify_xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $data = json_decode(json_encode(simplexml_load_string($verify_xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
         return $this->response = new ExpressCompletePurchaseResponse($this, $data);
     }
 
@@ -97,9 +100,11 @@ class ExpressCompletePurchaseRequest extends AbstractRequest {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($curl, CURLOPT_CAINFO, $cacert_url);
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+//        curl_setopt($curl, CURLOPT_CAINFO, $cacert_url);
         $responseText = curl_exec($curl);
         curl_close($curl);
         return $responseText;
