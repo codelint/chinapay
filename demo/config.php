@@ -51,11 +51,19 @@ return array(
         'partner' => '*',
         'partner_key' => '*',
 
-        'cert_path'     => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_cert.pem',
+        'cert_path' => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_cert.pem',
         'cert_key_path' => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_key.pem',
 
         'return_url' => base_url('/index.php'),
         'notify_url' => base_url('/wechat.notify.php'),
+        'cancel_url' => base_url('/index.php'),
+    ),
+
+    'baifu' => array(
+        'partner' => '*',
+        'key' => '*',
+        'return_url' => base_url('/index.php'),
+        'notify_url' => base_url('/baifu.notify.php'),
         'cancel_url' => base_url('/index.php'),
     )
 );
