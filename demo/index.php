@@ -80,5 +80,42 @@ $out_trade_no = time() . rand(1000, 9000);
     </form>
 </div>
 
+<div><h2>百度支付测试</h2></div>
+<div style="font-size: 18px">
+    <form action="baifu.redirect.php">
+        <label for="gateway-select">网关
+            <select id="gateway-select" name="gateway">
+                <option value="Wechat_Express">百度</option>
+            </select>
+        </label>
+        <br><br>
+        <label for="out_trade_no-input">
+            订单号
+            <input id="out_trade_no-input" name="out_trade_no" value="<?php echo $out_trade_no; ?>">
+        </label>
+        <br><br>
+        <label for="total_fee-input">
+            金额
+            <input id="total_fee-input" type="text" name="total_fee" value="0.01">
+        </label>
+
+        <br><br>
+        <label for="subject-input">
+            支付提示语
+            <input id="subject-input" name="subject" type="text" value="你正在为订单[<?php echo $out_trade_no; ?>]支付...">
+        </label>
+        <br><br>
+<!--        <label for="subject-input">-->
+<!--            支付类型-->
+<!--            <select id="subject-input" name="pay_type">-->
+<!--                <option value="JSAPI">网页支付</option>-->
+<!--                <option value="APP">APP_Prepay</option>-->
+<!--            </select>-->
+<!--        </label>-->
+<!--        <br><br>-->
+        <button>提交</button>
+    </form>
+</div>
+
 </body>
 </html>
