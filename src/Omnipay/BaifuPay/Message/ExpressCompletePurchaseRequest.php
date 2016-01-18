@@ -47,8 +47,7 @@ class ExpressCompletePurchaseRequest extends AbstractRequest {
         $this->validate(
             'key',
             'partner_id',
-            'out_trade_no',
-            'cert_path'
+            'out_trade_no'
         );
         // $character_set = $this->getParameter('character_set', 'GBK');
         $params = [
@@ -91,11 +90,11 @@ class ExpressCompletePurchaseRequest extends AbstractRequest {
     {
         $verify_url = $this->endpoint;
         $verify_url = $verify_url . '?' . http_build_query($data) ;
-        $responseTxt = $this->getHttpResponseGET($verify_url, $this->getParameter('cert_path'));
+        $responseTxt = $this->getHttpResponseGET($verify_url);
         return $responseTxt;
     }
 
-    protected function getHttpResponseGET($url, $cacert_url)
+    protected function getHttpResponseGET($url)
     {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
