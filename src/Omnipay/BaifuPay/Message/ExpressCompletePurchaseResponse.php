@@ -16,7 +16,8 @@ class ExpressCompletePurchaseResponse extends AbstractResponse implements Comple
      */
     public function isTradeStatusOk()
     {
-        // TODO: Implement isTradeStatusOk() method.
+        $data = $this->getData();
+        return ($data['pay_result'] == 1);
     }
 
     /**
@@ -26,6 +27,13 @@ class ExpressCompletePurchaseResponse extends AbstractResponse implements Comple
      */
     public function isSuccessful()
     {
-        // TODO: Implement isSuccessful() method.
+        return !empty($this->data);
     }
+
+    public function getTransactionReference()
+    {
+        return $this->getData();
+    }
+
+
 }
