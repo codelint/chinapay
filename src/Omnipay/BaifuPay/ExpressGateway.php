@@ -76,6 +76,10 @@ class ExpressGateway extends AbstractGateway {
         return $this->createRequest('\Omnipay\BaifuPay\Message\ExpressPurchaseRequest', $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\BaifuPay\Message\ExpressCompletePurchaseRequest
+     */
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\BaifuPay\Message\ExpressCompletePurchaseRequest', $parameters);
