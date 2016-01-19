@@ -22,6 +22,7 @@ function alipay_redirect($config)
         $gateway->setReturnUrl($config['return_url']);
         $gateway->setCertPath($config['cert_path']);
         $opts = array(
+            'sp_pass_through' => '%7B%22offline_pay%22%3A1%7D',
             'subject' => $_GET['subject'],
             'description' => '暂无',
             'total_fee' => $_GET['total_fee'],
