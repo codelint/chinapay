@@ -1,4 +1,4 @@
-<?php namespace Omnipay\BaifuPay;
+<?php namespace Omnipay\Baifu;
 
 use Omnipay\Common\AbstractGateway;
 

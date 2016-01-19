@@ -15,11 +15,12 @@ function alipay_redirect($config)
     try
     {
         // $gateway = \Omnipay\Omnipay::create('Alipay_WapExpress')
-        $gateway = new \Omnipay\BaifuPay\ExpressGateway();
+        $gateway = new \Omnipay\Baifu\ExpressGateway();
         $gateway->setPartner($config['partner']);
         $gateway->setKey($config['key']);
         $gateway->setNotifyUrl($config['notify_url']);
         $gateway->setReturnUrl($config['return_url']);
+        $gateway->setCertPath($config['cert_path']);
         $opts = array(
             'subject' => $_GET['subject'],
             'description' => '暂无',
@@ -27,6 +28,9 @@ function alipay_redirect($config)
             'out_trade_no' => $_GET['out_trade_no'],
         );
         $res = $gateway->purchase($opts)->send();
+//        $res = $gateway->completePurchase($opts)->send();
+//        $abc = [ 'result' => $res->getTransactionReference(), 'trade_status' => $res->isTradeStatusOk()];
+//        var_dump($abc);
         $cache = get_cache();
         $cache->save($_GET['out_trade_no'], $opts);
         $res->redirect();

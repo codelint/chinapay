@@ -1,4 +1,4 @@
-<?php namespace Omnipay\BaifuPay\Message;
+<?php namespace Omnipay\Baifu\Message;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\CompletePurchaseResponseInterface;
 
