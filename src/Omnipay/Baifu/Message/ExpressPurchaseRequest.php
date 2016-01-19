@@ -48,6 +48,8 @@ class ExpressPurchaseRequest extends AbstractRequest {
             'total_fee'
         );
         // $character_set = $this->getParameter('character_set', 'GBK');
+        $sp_pass_through = $this->getParameter('sp_pass_through', false);
+        $bank_no = $this->getParameter('bank_no', false);
         $params = [
             'service_code' => 1,
             'sp_no' => $this->getParameter('partner_id'),
@@ -62,8 +64,17 @@ class ExpressPurchaseRequest extends AbstractRequest {
             'pay_type' => $this->getParameter('type', 1),
             'sign_method' => 1,
             'input_charset' => 1,
+            'extra' => $this->getParameter('extra', ''),
             'version' => 2
         ];
+        if($sp_pass_through)
+        {
+            $params['sp_pass_through'] = $sp_pass_through;
+        }
+        if($bank_no)
+        {
+            $params['bank_no'] = $bank_no;
+        }
         ksort($params);
         $sign_str = '';
         foreach($params as $k => $v)
