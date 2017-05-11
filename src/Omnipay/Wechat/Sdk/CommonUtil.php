@@ -159,7 +159,7 @@ class CommonUtil {
         //初始化curl
         $ch = curl_init();
         //设置超时
-//        curl_setopt($ch, CURLOP_TIMEOUT, $second);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         //这里设置代理，如果有的话
         //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
@@ -167,7 +167,7 @@ class CommonUtil {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         //设置header
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        # curl_setopt($ch, CURLOPT_HEADER, FALSE);
         //要求结果为字符串且输出到屏幕上
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         //post提交方式

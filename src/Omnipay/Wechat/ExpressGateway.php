@@ -81,7 +81,15 @@ class ExpressGateway extends AbstractGateway {
 
     function getCertKeyPath()
     {
-        $this->getParameter('cert_key_path');
+        return $this->getParameter('cert_key_path');
+    }
+
+    function setPubCertPath($path){
+        $this->setParameter('pub_cert_path', $path);
+    }
+
+    function getPubCertPath(){
+        return $this->getParameter('pub_cert_path');
     }
 
     function getNotifyUrl()
@@ -244,6 +252,12 @@ class ExpressGateway extends AbstractGateway {
     {
         // $parameters['body'] = static::xml2array_by_wechat_notify_body($parameters['body']);
         return $this->createRequest('\Omnipay\Wechat\Message\WechatCompletePurchaseRequest', $parameters);
+    }
+
+    public function refund(array $params = array()){
+        $params['total_fee'] = abs($params['total_fee']) * 100;
+        $params['refund_fee'] = abs($params['refund_fee']) * 100;
+        return $this->createRequest('\Omnipay\Wechat\Message\WechatRefundRequest', $params);
     }
 
     /**

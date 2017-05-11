@@ -80,6 +80,45 @@ $out_trade_no = time() . rand(1000, 9000);
     </form>
 </div>
 
+
+<div><h2>微信退款测试</h2></div>
+<div style="font-size: 18px">
+    <form action="wechat.refund.php">
+        <label for="gateway-select">网关
+            <select id="gateway-select" name="gateway">
+                <option value="Wechat_Express">微信</option>
+            </select>
+        </label>
+        <br><br>
+        <label for="refund_out_refund_no-input">
+            商户退款单号
+            <input id="refund_out_refund_no-input" name="out_refund_no" value="<?php echo $out_trade_no; ?>">
+        </label>
+        <br><br>
+        <label for="refund_out_trade_no-input">
+            商户订单号
+            <input id="refund_out_trade_no-input" name="out_trade_no" value="MP100000065">
+        </label>
+        <br><br>
+        <label for="transaction_id-input">
+            微信订单号
+            <input id="transaction_id-input" name="transaction_id" value="">
+        </label>
+        <br><br>
+        <label for="refund_total_fee-input">
+            订单金额
+            <input id="refund_total_fee-input" type="text" name="total_fee" value="0.01">
+        </label>
+        <br><br>
+        <label for="refund_fee-input">
+            退款金额
+            <input id="refund_fee-input" type="text" name="refund_fee" value="0.01">
+        </label>
+        <br><br>
+        <button>提交</button>
+    </form>
+</div>
+
 <div><h2>百度支付测试</h2></div>
 <div style="font-size: 18px">
     <form action="baifu.redirect.php">
@@ -105,14 +144,14 @@ $out_trade_no = time() . rand(1000, 9000);
             <input id="subject-input" name="subject" type="text" value="你正在为订单[<?php echo $out_trade_no; ?>]支付...">
         </label>
         <br><br>
-<!--        <label for="subject-input">-->
-<!--            支付类型-->
-<!--            <select id="subject-input" name="pay_type">-->
-<!--                <option value="JSAPI">网页支付</option>-->
-<!--                <option value="APP">APP_Prepay</option>-->
-<!--            </select>-->
-<!--        </label>-->
-<!--        <br><br>-->
+        <!--        <label for="subject-input">-->
+        <!--            支付类型-->
+        <!--            <select id="subject-input" name="pay_type">-->
+        <!--                <option value="JSAPI">网页支付</option>-->
+        <!--                <option value="APP">APP_Prepay</option>-->
+        <!--            </select>-->
+        <!--        </label>-->
+        <!--        <br><br>-->
         <button>提交</button>
     </form>
 </div>
