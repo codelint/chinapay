@@ -106,8 +106,8 @@ class WechatRefundRequest extends BaseAbstractRequest {
             $refund->setParameter('transaction_id', $data['transaction_id']); //商户订单号
         }
         $refund->setParameter('total_fee', $data['total_fee']); //总金额
-        $refund->setParameter('refund_fee', $data['refund_fee']); //通知地址
-        $refund->setParameter('out_refund_no', $data['out_refund_no']); //通知地址
+        $refund->setParameter('refund_fee', $data['refund_fee']); //退款金额
+        $refund->setParameter('out_refund_no', $data['out_refund_no']); //退款单号
         $refund->setParameter('op_user_id', $data['op_user_id']); //交易类型
         $refund->setParameter('refund_account', $data['refund_account']);
 
