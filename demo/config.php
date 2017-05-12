@@ -53,6 +53,7 @@ return array(
 
         'cert_path' => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_cert.pem',
         'cert_key_path' => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/apiclient_key.pem',
+        'pub_cert_path' => '/home/dev/app/jenkins/data/workspace/www/cer/wechat/rootca.pem'
 
         'return_url' => base_url('/index.php'),
         'notify_url' => base_url('/wechat.notify.php'),
