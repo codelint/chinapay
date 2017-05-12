@@ -254,6 +254,10 @@ class ExpressGateway extends AbstractGateway {
         return $this->createRequest('\Omnipay\Wechat\Message\WechatCompletePurchaseRequest', $parameters);
     }
 
+    /**
+     * @param array $params
+     * @return \Omnipay\Wechat\Message\WechatRefundRequest
+     */
     public function refund(array $params = array()){
         $params['total_fee'] = abs($params['total_fee']) * 100;
         $params['refund_fee'] = abs($params['refund_fee']) * 100;
